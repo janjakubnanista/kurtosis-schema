@@ -1,0 +1,15 @@
+name: Check code submission
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: "${{ github.workflow_ref }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check code
+    uses: ./.github/workflows/reusable-check.yaml
+    secrets: inherit

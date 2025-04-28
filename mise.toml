@@ -1,0 +1,10 @@
+[tools]
+
+just = "1.37.0"
+kurtosis="1.6.0"
+kurtosis-test="0.0.3"
+
+[alias]
+
+kurtosis="ubi:kurtosis-tech/kurtosis-cli-release-artifacts[exe=kurtosis]"
+kurtosis-test="ubi:ethereum-optimism/kurtosis-test"
