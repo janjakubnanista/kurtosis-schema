@@ -1,7 +1,7 @@
 [tools]
 
 just = "1.37.0"
-kurtosis="1.6.0"
+kurtosis="1.7.2"
 kurtosis-lint="v0.0.3"
 kurtosis-test="0.0.3"
 
