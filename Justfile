@@ -6,4 +6,5 @@ kurtosis-lint:
 
 lint: kurtosis-check kurtosis-lint
 
-test: kurtosis-test .
+test: 
+    kurtosis-test .
