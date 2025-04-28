@@ -2,9 +2,11 @@
 
 just = "1.37.0"
 kurtosis="1.6.0"
+kurtosis-lint="v0.0.3"
 kurtosis-test="0.0.3"
 
 [alias]
 
 kurtosis="ubi:kurtosis-tech/kurtosis-cli-release-artifacts[exe=kurtosis]"
+kurtosis-lint="pipx:ethereum-optimism/kurtosis-lint"
 kurtosis-test="ubi:ethereum-optimism/kurtosis-test"
