@@ -6,5 +6,5 @@ kurtosis-lint:
 
 lint: kurtosis-check kurtosis-lint
 
-test: 
-    kurtosis-test .
+test *args='': 
+    kurtosis-test . {{args}}
