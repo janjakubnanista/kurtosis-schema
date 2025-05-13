@@ -9,7 +9,7 @@ def __parse_int(v, context=_context.default_context()):
 	return v
 
 def int_type():
-	return struct(
-		__type= "int",
-		parse= __parse_int,
+	return _type.create_type(
+		name= "int",
+		pipelines=[[__parse_int]]
 	)
