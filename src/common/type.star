@@ -7,33 +7,41 @@ def _contextualize(f):
     return lambda v,context: f(v)
 
 def _pipe(v, pipelines, context):
+    pipelines_context = _context.failure_accumulator_context()
+
     for pipeline in pipelines:
-        current = v
         pipeline_context = _context.short_term_memory_context()
 
+        current = v
         for parser in pipeline:
             current = parser(current, pipeline_context)
             
             if pipeline_context.failed():
+                pipelines_context.fail(pipeline_context.failure())
                 break
         
         if not pipeline_context.failed():
             return current
 
-    # FIXME
-    context.fail("Failed to parse value: {}".format(v))
+    context.fail("Failed to parse value: {}".format("; ".join(pipelines_context.failures())))
 
-def create_type(name, pipelines):
-    transform = lambda transformer, name=name: create_type(name=name, pipelines=_append_pipelines(pipelines, [[_contextualize(transformer)]]))
+def create(name, pipelines):
+    transform = lambda transformer, name=name: create(name=name, pipelines=_append_pipelines(pipelines, [[_contextualize(transformer)]]))
 
-    pipe = lambda schema, name=name: create_type(name=name, pipelines=_append_pipelines(pipelines, schema.__pipelines))
+    pipe = lambda t, name=name: create(name=name, pipelines=_append_pipelines(pipelines, t.__pipelines))
 
     parse = lambda v, context=_context.default_context(): _pipe(v, pipelines, context)
 
     return struct(
-        __name=name,
         __pipelines=pipelines,
+        name=name,
         parse=parse,
         transform=transform,
         pipe=pipe,
     )
+
+def rename(t, name):
+    return create(name=name, pipelines=t.__pipelines)
+
+def get_pipelines(t):
+    return t.__pipelines

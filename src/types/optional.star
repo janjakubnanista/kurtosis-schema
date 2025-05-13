@@ -1,8 +1,9 @@
 _literal = import_module("./literal.star")
 _union = import_module("./union.star")
+_type = import_module("/src/common/type.star")
 
-def optional_type(original_type):
-	return _union.union_type(
-        original_type,
-        _literal.literal_type(None)
-    )
+def create(t):
+	return _type.rename(name="optional {}".format(t.name), t=_union.create(
+        t,
+        _literal.create(None)
+    ))

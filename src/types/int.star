@@ -8,8 +8,8 @@ def __parse_int(v, context=_context.default_context()):
 
 	return v
 
-def int_type():
-	return _type.create_type(
+def create():
+	return _type.create(
 		name= "int",
 		pipelines=[[__parse_int]]
 	)

@@ -4,13 +4,13 @@ def default_context():
     )
 
 def short_term_memory_context():
-    failures = []
+    failures = [None]
 
     def _fail(message):
         failures[0] = message
 
     def _failed():
-        return len(failures) == 1
+        return failures[0] != None
 
     def _failure():
         return failures[0]
