@@ -1,8 +1,5 @@
 _context = import_module("./context.star")
 
-def _append_pipelines(existing_pipelines, new_pipelines):
-    return [ e + n for e in existing_pipelines for n in new_pipelines ]
-
 def _contextualize(f):
     return lambda v,context: f(v)
 
@@ -26,9 +23,9 @@ def _pipe(v, pipelines, context):
     context.fail("Failed to parse value: {}".format("; ".join(pipelines_context.failures())))
 
 def create(name, pipelines):
-    transform = lambda transformer, name=name: create(name=name, pipelines=_append_pipelines(pipelines, [[_contextualize(transformer)]]))
+    transform = lambda transformer, name=name: create(name=name, pipelines=append_pipelines(pipelines, [[_contextualize(transformer)]]))
 
-    pipe = lambda t, name=name: create(name=name, pipelines=_append_pipelines(pipelines, t.__pipelines))
+    pipe = lambda t, name=name: create(name=name, pipelines=append_pipelines(pipelines, t.__pipelines))
 
     parse = lambda v, context=_context.default_context(): _pipe(v, pipelines, context)
 
@@ -39,6 +36,9 @@ def create(name, pipelines):
         transform=transform,
         pipe=pipe,
     )
+
+def append_pipelines(existing_pipelines, new_pipelines):
+    return [ e + n for e in existing_pipelines for n in new_pipelines ]
 
 def rename(t, name):
     return create(name=name, pipelines=t.__pipelines)
