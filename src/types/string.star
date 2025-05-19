@@ -1,10 +1,10 @@
 _type = import_module("/src/common/type.star")
 _primitive = import_module("./primitive.star")
 
-_parse_int = _primitive.create_parse("int")
+_parse_string = _primitive.create_parse("string")
 
 def create():
 	return _type.create(
-		name= "int",
-		pipelines=[[_parse_int]]
+		name= "string",
+		pipelines=[[_parse_string]]
 	)

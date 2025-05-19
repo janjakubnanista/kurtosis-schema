@@ -22,6 +22,5 @@ def test_struct_type_basic(plan):
     }).parse(struct(key=1, other_key="a")), "Expected 'other_key' to be of type 'literal(7)', but got 'literal(a)'")
     expect.fails(lambda: main.struct_type({
         "key": main.int_type(),
-        "other_key": main.literal_type(7),
-        "yet_another_key": main.int_type()
-    }).parse(struct(key=1)), "Missing property other_key in struct")
+        "other_key": main.string_type(),
+    }).parse(struct(key=1, other_key=1)), "Wanted string, got int")

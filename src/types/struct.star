@@ -1,10 +1,7 @@
 _type = import_module("/src/common/type.star")
+_primitive = import_module("./primitive.star")
 
-def __parse_struct(v, context):
-    if type(v) != "struct":
-        context.fail("Wanted struct, got {}".format(type(v)))
-
-    return v
+_parse_struct = _primitive.create_parse("struct")
 
 def __parse_struct_property(v, k, t, context):
     if k not in v:
@@ -30,7 +27,7 @@ def create(properties, type_name="struct"):
     def __to_struct(v, context):
         return struct(**v)
 
-    pipelines = [[__parse_struct, __to_dict, __push_to_stack]]
+    pipelines = [[_parse_struct, __to_dict, __push_to_stack]]
 
     for property_name, property_type in properties.items():
         def __get_property(v, context):
